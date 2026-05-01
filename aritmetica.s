@@ -1,5 +1,5 @@
 .section .data
-
+//199812349 Edy Donaldo López Anavizca
 msg_ar_menu:
     .asciz "\n══ ARITMÉTICA DE MATRICES ════════════\n 1. Suma        (A + B)\n 2. Resta       (A - B)\n 3. Mult. punto (A ⊙ B)\n 4. Mult. cruz  (A × B)\n 5. División    (A / B)\n 6. Volver al menú principal\n══════════════════════════════════════\nOpción: "
 
@@ -317,6 +317,7 @@ menu_aritmetica:
     ldr x0, =msg_ar_dim_error
     bl print_str
     b .Lar_menu_loop
+ 
 
 .Lar_fin:
     ldp x9, x10, [sp, #96]

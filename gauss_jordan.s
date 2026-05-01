@@ -1,5 +1,5 @@
 .section .data
-
+//199812349 Edy Donaldo López Anavizca
 msg_gj_titulo:  .asciz "\n══ GAUSS-JORDAN (RREF) ═══════════════\n"
 msg_gj_orig:    .asciz "Matriz original:\n"
 msg_gj_result:  .asciz "\nForma reducida por filas (resultado):\n"
@@ -45,3 +45,5 @@ calcular_gauss_jordan:
     ldp     x19, x20, [sp, #16]
     ldp     x29, x30, [sp], #48
     ret
+
+

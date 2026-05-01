@@ -1,5 +1,5 @@
 .section .data
-
+//199812349 Edy Donaldo López Anavizca
 msg_gs_titulo:  .asciz "\n══ MÉTODO DE GAUSS ═══════════════════\n"
 msg_gs_orig:    .asciz "Matriz original:\n"
 msg_gs_result:  .asciz "\nMatriz triangular superior:\n"
@@ -160,3 +160,6 @@ calcular_gauss:
     ldp x19, x20, [sp, #16]
     ldp x29, x30, [sp], #80
     ret
+
+
+

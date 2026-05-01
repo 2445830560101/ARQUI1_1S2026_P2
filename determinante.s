@@ -1,5 +1,5 @@
 .section .data
-
+//199812349 Edy Donaldo López Anavizca
 msg_det_titulo: .asciz "\n══ DETERMINANTE ══════════════════════\n"
 msg_det_error:  .asciz "\n[ERROR] La matriz debe ser cuadrada.\n"
 msg_det_result: .asciz "\ndet(A) = "
@@ -53,6 +53,8 @@ calcular_determinante:
     mul     x5, x1, x2          // b*c
     sub     x0, x4, x5          // det = a*d - b*c
     b       .Ldet_mostrar
+
+
 
 .Ldet_nxn:
     // Por ahora, solo mostrar mensaje de que no está implementado

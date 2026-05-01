@@ -65,6 +65,9 @@ print_int:
 
     mov     x19, x0             // guardar valor original
 
+
+
+
     // ── Manejar cero ────────────────────────────────────────
     cbnz    x19, .Lpi_nonzero
     // Es cero: imprimir "0"

@@ -1,4 +1,5 @@
 .section .data
+//199812349 Edy Donaldo López Anavizca
 
 msg_inv_titulo: .asciz "\n══ MATRIZ INVERSA ════════════════════\n"
 msg_inv_error:  .asciz "\n[ERROR] La matriz debe ser cuadrada.\n"
@@ -141,6 +142,9 @@ calcular_inversa:
     ldp     x19, x20, [sp, #16]
     ldp     x29, x30, [sp], #128
     ret
+
+
+
 
 .Linv_error_cuad:
     ldr     x0, =msg_inv_error

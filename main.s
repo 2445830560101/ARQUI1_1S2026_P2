@@ -1,14 +1,16 @@
 .section .data
-
+//199812349 Edy Donaldo López Anavizca
 // ── Mensajes del menú principal ──────────────────────────────
 msg_bienvenida:
-    .asciz "\n╔══════════════════════════════════════╗\n║  Motor de Álgebra Lineal en ARM64    ║\n║  ARQUI1 — USAC  2026                ║\n╚══════════════════════════════════════╝\n\n"
+    .asciz "\n╔══════════════════════════════════════╗\n║  Motor de Álgebra Lineal en ARM64    ║\n║  ARQUI1 — USAC  2026      199812349  Edy Donaldo López Anavizca         ║\n╚══════════════════════════════════════╝\n\n"
 
 msg_menu:
     .asciz "\n═══════════ MENÚ PRINCIPAL ═══════════\n 1. Ingresar nueva matriz\n 2. Matriz Identidad\n 3. Matriz Transpuesta\n 4. Método de Gauss\n 5. Gauss-Jordan\n 6. Matriz Inversa\n 7. Aritmética (suma/resta/mult/div)\n 8. Determinante\n 9. Salir\n═══════════════════════════════════════\nSeleccione una opción: "
 
 msg_opcion_invalida:
     .asciz "\n[ERROR] Opción inválida. Intente de nuevo.\n"
+
+
 
 msg_adios:
     .asciz "\n¡Hasta luego!\n\n"

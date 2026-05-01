@@ -6,6 +6,8 @@ msg_id_result:  .asciz "\nMatriz identidad resultante:\n"
 msg_id_error:   .asciz "\n[ERROR] La matriz debe ser cuadrada (filas == columnas)\n"
 msg_id_proceso: .asciz "\nProceso: poniendo 1 en diagonal, 0 en el resto...\n"
 
+//199812349 Edy Donaldo López Anavizca
+
 
 .section .text
 .extern print_str

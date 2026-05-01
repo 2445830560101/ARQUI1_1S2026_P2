@@ -1,5 +1,5 @@
 .section .data
-
+//199812349 Edy Donaldo López Anavizca
 msg_pedir_filas:    .asciz "\nIngrese número de filas: "
 msg_pedir_cols:     .asciz "Ingrese número de columnas: "
 msg_matriz_cargada: .asciz "\n✅  Matriz cargada correctamente.\n"
