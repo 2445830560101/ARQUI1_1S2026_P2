@@ -6,7 +6,7 @@ CFLAGS = -static
 ASFLAGS = 
 LDFLAGS = 
 
-OBJS = main.o io.o matriz.o identidad.o traspuesta.o gauss.o gauss_jordan.o inversa.o aritmetica.o determinante.o
+OBJS = main.o io.o matriz.o identidad.o traspuesta.o gauss.o gauss_jordan.o inversa.o aritmetica.o determinante.o  memoria.o
 
 TARGET = algebra_lineal
 

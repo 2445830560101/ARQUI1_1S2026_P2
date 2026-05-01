@@ -18,14 +18,17 @@ msg_celda_mid2:     .asciz "] = "
 .section .text
 .extern print_str
 .extern read_int
+.extern print_int
+.extern malloc
 
 .global ingresar_matriz
 ingresar_matriz:
-    stp     x29, x30, [sp, #-48]!
+    stp     x29, x30, [sp, #-64]!
     mov     x29, sp
     // Guardar registros callee-saved que usaremos
     stp     x19, x20, [sp, #16]
     stp     x21, x22, [sp, #32]
+    stp     x23, x24, [sp, #48]
 
     // ── Leer número de filas ─────────────────────────────────
     ldr     x0, =msg_pedir_filas
@@ -42,19 +45,25 @@ ingresar_matriz:
     // ── Reservar memoria: filas * cols * 8 bytes ─────────────
     //  syscall mmap(NULL, size, PROT_READ|PROT_WRITE,
     //               MAP_PRIVATE|MAP_ANONYMOUS, -1, 0)
-    mul     x1, x19, x20        // x1 = filas * cols
-    lsl     x1, x1, #3          // x1 = bytes (× 8 por .quad)
-    mov     x0, #0              // addr = NULL (kernel elige)
-    mov     x2, #3              // PROT_READ | PROT_WRITE
-    mov     x3, #0x22           // MAP_PRIVATE | MAP_ANONYMOUS
-    mov     x4, #-1             // fd = -1 (sin archivo)
-    mov     x5, #0              // offset = 0
-    mov     x8, #222            // syscall mmap
-    svc     #0
-    mov     x21, x0             // x21 = puntero base al bloque
+    mul     x0, x19, x20        // x1 = filas * cols
+    lsl     x0, x0, #3          // x1 = bytes (× 8 por .quad)
+    bl      malloc
+    mov   x21,x0
+    cbz   x21,.Lerror_mem
+    mov   x22,#0
+    mul  x23, x19, x20
 
-    // ── Pedir cada elemento a[i][j] ──────────────────────────
-    mov     x22, #0             // i = 0
+.Linit_zero:
+
+    cmp x22,x23
+    bge .Lpedir_elementos
+    str xzr, [x21,x22,lsl #3]
+    add x22,x22,#1
+    b .Linit_zero
+
+.Lpedir_elementos:
+    mov x22,#0
+
 .Lloop_filas:
     cmp     x22, x19
     b.ge    .Lfin_ingreso
@@ -82,11 +91,15 @@ ingresar_matriz:
     // Guardar en memoria: dirección = base + (i*cols + j)*8
     mul     x24, x22, x20       // i * cols
     add     x24, x24, x23       // + j
-    lsl     x24, x24, #3        // × 8 bytes
-    str     x0, [x21, x24]      // A[i][j] = valor
-
+    str     x0, [x21, x24, lsl #3]  // A[i][j] = valor
     add     x23, x23, #1        // j++
     b       .Lloop_cols
+
+    //lsl     x24, x24, #3        // × 8 bytes
+    //str     x0, [x21, x24]      // A[i][j] = valor
+
+    //add     x23, x23, #1        // j++
+    //b       .Lloop_cols
 
 .Lsig_fila:
     add     x22, x22, #1        // i++
@@ -106,18 +119,37 @@ ingresar_matriz:
     mov     x0, x19
     mov     x1, x20
     mov     x2, x21
+    b .Lret
 
-    ldp     x21, x22, [sp, #32]
-    ldp     x19, x20, [sp, #16]
-    ldp     x29, x30, [sp], #48
-    ret
+.Lerror_mem:
+    // Manejar error de malloc (por simplicidad, solo imprimir mensaje y retornar 0)
+    mov     x0, #0
+    mov     x1, #0
+    mov     x2, #0
+
+.Lret:
+        ldp     x23, x24, [sp, #48]
+        ldp     x21, x22, [sp, #32]
+        ldp     x19, x20, [sp, #16]
+        ldp     x29, x30, [sp], #64
+        ret
+
+
+
+
+    //ldp     x21, x22, [sp, #32]
+    //ldp     x19, x20, [sp, #16]
+    //ldp     x29, x30, [sp], #48
+    //ret
 
 .global imprimir_matriz
 imprimir_matriz:
-    stp     x29, x30, [sp, #-48]!
+    stp     x29, x30, [sp, #-64]!
     mov     x29, sp
     stp     x19, x20, [sp, #16]
     stp     x21, x22, [sp, #32]
+    stp     x23, x24, [sp, #48]
+
 
     mov     x19, x0             // filas
     mov     x20, x1             // cols
@@ -157,11 +189,16 @@ imprimir_matriz:
     bl      print_str
     add     x22, x22, #1
     b       .Lprint_fila
+.Lprint_error:
+    ldr x0,=msg_matriz_cargada
+    bl print_str
 
+    
 .Lprint_fin:
+    ldp     x23,x24,[sp,#48]
     ldp     x21, x22, [sp, #32]
     ldp     x19, x20, [sp, #16]
-    ldp     x29, x30, [sp], #48
+    ldp     x29, x30, [sp], #64
     ret
 
 
